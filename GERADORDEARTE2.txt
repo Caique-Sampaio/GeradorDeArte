@@ -1,0 +1,681 @@
+//Cor
+color blue = color(3, 76, 119);
+color gold = color(241, 178, 38);
+color clay = color(102, 0, 24);
+color cinza1 = color(210);
+color cinza2 = color(170);
+color cinza3 = color(60);
+int paleta; 
+int cor;
+//Configura as paletas
+void geraPaleta(int paleta) {
+  switch (cor) {
+  case 1:
+    if (paleta == 1) 
+      tint(blue);
+    if (paleta == 2) 
+      tint(gold);
+    if (paleta == 3) 
+      tint(clay);
+    break;
+  case 2:
+    tint(cinza1);
+    break;
+  case 3:
+    tint(cinza2);
+    break;
+  case 4:
+    tint(cinza3);
+    break;
+  case 5:
+    tint(255);
+    break;
+  }
+}
+//Gera qualquer cor
+void geraCor(int paleta) { 
+  cor = int(random(1, 6));
+  geraPaleta(paleta);
+}
+//Não gera cor
+void naoGeraCor(int paleta) {
+  cor = 5;
+  geraPaleta(paleta);
+}
+//Gera apenas azul, vermelho ou amarelo
+void geraCor1(int paleta) {
+  cor = 1;
+  geraPaleta(paleta);
+}
+//Textura
+PImage textura1, textura2, textura3, textura4, 
+textura5, textura6, textura7, textura8, textura9;
+int comboTextura;
+int textura;
+//Configura as combinações de textura
+void configComboTextura(int comboTextura) {
+  switch (textura) {
+  case 1:
+    if (comboTextura == 1) 
+      texture(textura1);
+    if (comboTextura == 2) 
+      texture(textura4);
+    if (comboTextura == 3) 
+      texture(textura7);
+    break;
+  case 2:
+    if (comboTextura == 1) 
+      texture(textura2);
+    if (comboTextura == 2) 
+      texture(textura5);
+    if (comboTextura == 3) 
+      texture(textura8);
+    break;
+  case 3:
+    if (comboTextura == 1) 
+      texture(textura3);
+    if (comboTextura == 2) 
+      texture(textura6);
+    if (comboTextura == 3) 
+      texture(textura9);
+    break;
+  }
+}
+//Gera uma textura de acordo com a cor da forma
+void geraTextura(int comboTextura) {   
+  if (cor == 1 || cor == 3 || cor == 4) {
+    textura = int(random(1, 4));
+    configComboTextura(comboTextura);
+  }
+  if (cor == 2) {
+    fill(cinza1);
+  }
+  if (cor == 5) {
+    fill(255);
+  }
+}
+//rotação.
+int angulo;
+//Gera rotação
+void rotacao(int angulo) {
+  switch (angulo) {
+  case 0:
+    translate(0, 0);
+    rotate(radians(0));
+    break;
+  case 1:
+    translate(mX*2+m, 0);
+    rotate(radians(90));
+    break;
+  case 2:
+    translate(mX*2+m, mY*2+m);
+    rotate(radians(180));
+    break;
+  case 3:
+    translate(0, mY*2+m);
+    rotate(radians(270));
+    break;
+  }
+}
+//Primeiro ajuste de translate
+void ajustaPosicao1() {
+  switch(angulo) {
+  case 1:
+    translate(-100, -100);
+    break;
+  case 2:
+    translate(0, 0);
+    break;
+  case 3:
+    translate(100, 100);
+    break;
+  }
+}
+//Segundo ajuste translate
+void ajustaPosicao2() {
+  switch(angulo) {
+  case 1:
+    translate(400, 400);
+    break;
+  case 2:
+    translate(0, 0);
+    break;
+  case 3:
+    translate(-400, -400);
+    break;
+  }
+}
+
+//Módulos
+int tipoModulo;
+int combo;
+//Gera um módulo com as características desejadas
+void geraModulo(int combo, int angulo, int paleta, int comboTextura, int mX, int mY) {
+  switch (combo) {
+  case 1:
+    tipoModulo = int(random(1, 4));
+    switch (tipoModulo) {
+    case 1:
+      desenhaModulo1();
+      break;
+    case 2:
+      desenhaModulo3();
+      break;
+    case 3:
+      desenhaModulo4();
+      break;
+    }
+    break;
+  case 2:
+    tipoModulo = int(random(1, 3));
+    switch (tipoModulo) {
+    case 1:
+      desenhaModulo1();
+      break;
+    case 2:
+      desenhaModulo7();
+      break;
+    }
+    break;
+  case 3:
+    tipoModulo = int(random(1, 5));
+    switch (tipoModulo) {
+    case 1:
+      desenhaModulo1();
+      break;
+    case 2:
+      desenhaModulo2();
+      break;
+    case 3:
+      desenhaModulo5();
+      break;
+    case 4:
+      desenhaModulo6();
+      break;
+    }
+    break;
+  }
+}
+//Desenho dos módulos.
+int mX = 0;
+int mY = 0;
+int m = 100;
+int m2 = m/2;
+int m3 = m/3;
+int m84 = m*84/100;
+//Desenha o módulo 1
+void desenhaModulo1() {
+  geraCor(paleta);
+  while (cor == 5) {
+    geraCor(paleta);
+  }
+  beginShape();
+  geraTextura(comboTextura);
+  vertex(mX, mY, 0, 0);
+  vertex(mX+m, mY, 200, 0);
+  vertex(mX+m, mY+m, 200, 200);
+  vertex(mX, mY+m, 0, 200);
+  endShape();
+}
+//Desenha o módulo 2
+void desenhaModulo2() {
+  geraCor(paleta);
+  beginShape();
+  geraTextura(comboTextura);
+  vertex(mX, mY, 0, 0);
+  vertex(mX+m2, mY, 200, 0);
+  vertex(mX+m2, mY+m, 200, 200);
+  vertex(mX, mY+m, 0, 200);
+  endShape();
+  int cor1 = cor;
+  geraCor(paleta);
+  while (cor == cor1) {
+    geraCor(paleta);
+  }
+  beginShape();
+  geraTextura(comboTextura);
+  vertex(mX + m2, mY, 0, 0);
+  vertex(mX + m2+m2, mY, 200, 0);
+  vertex(mX + m2+m2, mY+m, 200, 200);
+  vertex(mX + m2, mY+m, 0, 200);
+  endShape();
+}
+//Desenha o módulo 3
+void desenhaModulo3() {
+  geraCor(paleta);
+  beginShape();
+  geraTextura(comboTextura);
+  vertex(mX, mY, 0, 0);
+  vertex(mX+m, mY, 200, 0);
+  vertex(mX+m, mY+m, 200, 200);
+  endShape();
+  int cor1 = cor;
+  geraCor(paleta);
+  while (cor1 == cor) {
+    geraCor(paleta);
+  }
+  beginShape();
+  geraTextura(comboTextura);
+  vertex(mX+m, mY+m, 0, 0);
+  vertex(mX, mY+m, 200, 0);
+  vertex(mX, mY, 200, 200);
+  endShape();
+}
+//Desenha o módulo 4
+void desenhaModulo4() {
+  naoGeraCor(paleta);
+  beginShape();
+  geraTextura(comboTextura);
+  vertex(mX+m3, mY+m3, 0, 0);
+  vertex(mX+m3+m3, mY+m3, 200, 0);
+  vertex(mX+m3+m3, mY+m3+m3, 200, 200);
+  vertex(mX+m3, mY+m3+m3, 0, 200);
+  endShape();
+  int cor1 = cor;
+  geraCor(paleta);
+  while (cor == cor1) {
+    geraCor(paleta);
+  }
+  beginShape();
+  geraTextura(comboTextura);
+  vertex(mX, mY, 0, 0);
+  vertex(mX+m, mY, 200, 0);
+  vertex(mX+m3+m3, mY+m3, 200, 200);
+  vertex(mX+m3, mY+m3, 0, 200);
+  endShape();
+  int cor2 = cor;
+  geraCor(paleta);
+  while (cor == cor1 || cor == cor2) {
+    geraCor(paleta);
+  }
+  beginShape();
+  geraTextura(comboTextura);
+  vertex(mX, mY, 0, 0);
+  vertex(mX+m3, mY+m3, 200, 0);
+  vertex(mX+m3, mY+m3+m3, 200, 200);
+  vertex(mX, mY+m, 0, 200);
+  endShape();
+  int cor3 = cor;
+  geraCor(paleta);
+  while (cor == cor1 || cor == cor2 || cor == cor3) {
+    geraCor(paleta);
+  }
+  beginShape();
+  geraTextura(comboTextura);
+  vertex(mX, mY+m, 0, 0);
+  vertex(mX+m3, mY+m3+m3, 200, 0);
+  vertex(mX+m3+m3, mY+m3+m3, 200, 200);
+  vertex(mX+m, mY+m, 0, 200);
+  endShape();
+  int cor4 = cor;
+  geraCor(paleta);
+  while (cor == cor1 || cor == cor2 || cor == cor3 || cor == cor4) {
+    geraCor(paleta);
+  }
+  beginShape();
+  geraTextura(comboTextura);
+  vertex(mX+m, mY, 0, 0);
+  vertex(mX+m3+m3, mY+m3, 200, 0);
+  vertex(mX+m3+m3, mY+m3+m3, 200, 200);
+  vertex(mX+m, mY+m, 0, 200);
+  endShape();
+}
+//Desenha o módulo 5
+void desenhaModulo5() {
+  naoGeraCor(paleta);
+  beginShape();
+  geraTextura(comboTextura);
+  vertex(mX, mY, 0, 0);
+  vertex(mX+m, mY, 200, 0);
+  vertex(mX+m2, mY+m2, 200, 200);
+  endShape();
+  geraCor(paleta);
+  int cor1 = cor;
+  beginShape();
+  geraTextura(comboTextura);
+  vertex(mX, mY, 0, 0);
+  vertex(mX+m2, mY+m2, 200, 0);
+  vertex(mX+m2, mY+m, 200, 200);
+  vertex(mX, mY+m, 0, 200);
+  endShape();
+  int cor2 = int(random(1, 6));
+  if (cor1 == 5) {
+    while (cor1 == cor2) {
+      geraCor(paleta);
+    }
+  }
+  if (cor1 != 5) {
+    naoGeraCor(paleta);
+  }
+  beginShape();
+  geraTextura(comboTextura);
+  vertex(mX+m, mY, 0, 0);
+  vertex(mX+m2, mY+m2, 200, 0);
+  vertex(mX+m2, mY+m, 200, 200);
+  vertex(mX+m, mY+m, 0, 200);
+  endShape();
+}
+//Desenha o módulo 6
+void desenhaModulo6() {
+  naoGeraCor(paleta);
+  beginShape();
+  geraTextura(comboTextura);
+  vertex(mX+m3, mY+m2, 0, 0);
+  vertex(mX+m3+m3, mY+m2, 200, 0);
+  vertex(mX+m3+m3, mY+m, 200, 200);
+  vertex(mX+m3, mY+m, 0, 200);
+  endShape();
+  geraCor(paleta);
+  while (cor == 5) {
+    geraCor(paleta);
+  }
+  beginShape();
+  geraTextura(comboTextura);
+  vertex(mX, mY, 0, 0);
+  vertex(mX+m, mY, 200, 0);
+  vertex(mX+m3+m3, mY+m2, 200, 200);
+  vertex(mX+m3, mY+m2, 0, 200);
+  endShape();
+  int cor1 = cor;
+  geraCor(paleta);
+  while (cor == cor1 || cor == 5) {
+    geraCor(paleta);
+  }
+  beginShape();
+  geraTextura(comboTextura);
+  vertex(mX, mY, 0, 0);
+  vertex(mX+m3, mY+m2, 200, 0);
+  vertex(mX+m3, mY+m, 200, 200);
+  vertex(mX, mY+m, 0, 200);
+  endShape();
+  geraCor1(paleta);
+  beginShape();
+  geraTextura(comboTextura);
+  vertex(mX+m, mY, 0, 0);
+  vertex(mX+m3+m3, mY+m2, 200, 0);
+  vertex(mX+m3+m3, mY+m, 200, 200);
+  vertex(mX+m, mY+m, 0, 200);
+  endShape();
+}
+//Desenha o módulo 7
+void desenhaModulo7() {
+  naoGeraCor(paleta);
+  beginShape();
+  geraTextura(comboTextura);
+  vertex(mX+m3, mY+m84-m3, 0, 0);
+  vertex(mX+m3+m3, mY+m84-m3, 200, 0);
+  vertex(mX+m3+m3, mY+m84, 200, 200);
+  vertex(mX+m3, mY+m84, 0, 200);
+  endShape();
+  geraCor(paleta);
+  while (cor == 5) {
+    geraCor(paleta);
+  }
+  beginShape();
+  geraTextura(comboTextura);
+  vertex(mX, mY, 0, 0);
+  vertex(mX+m3, mY+m84-m3, 200, 0);
+  vertex(mX+m3+m3, mY+m84-m3, 200, 200);
+  vertex(mX+m, mY, 0, 200);
+  endShape();
+  int cor1 = cor;
+  geraCor(paleta);
+  while (cor == 5 || cor == cor1) {
+    geraCor(paleta);
+  }
+  beginShape();
+  geraTextura(comboTextura);
+  vertex(mX, mY, 0, 0);
+  vertex(mX+m3, mY+m84-m3, 200, 0);
+  vertex(mX+m3, mY+m84, 200, 200);
+  vertex(mX, mY+m, 0, 200);
+  endShape();
+  int cor2 = cor;  
+  geraCor(paleta);
+  while (cor == 5 || cor == cor1 || cor == cor2) {
+    geraCor(paleta);
+  }
+  beginShape();
+  geraTextura(comboTextura);
+  vertex(mX+m, mY, 0, 0);
+  vertex(mX+m3+m3, mY+m84-m3, 200, 0);
+  vertex(mX+m3+m3, mY+m84, 200, 200);
+  vertex(mX+m, mY+m, 0, 200);
+  endShape();
+  int cor3 = cor;
+  geraCor(paleta);
+  while (cor == 5 || cor == cor1 || cor == cor2 || cor == cor3) {
+    geraCor(paleta);
+  }
+  beginShape();
+  geraTextura(comboTextura);
+  vertex(mX, mY+m, 0, 0);
+  vertex(mX+m3, mY+m84, 200, 0);
+  vertex(mX+m3+m3, mY+m84, 200, 200);
+  vertex(mX+m, mY+m, 0, 200);
+  endShape();
+}
+//Contador
+int contador1 = 0;
+int contador2 = 0;
+int contador3 = 0;
+int contador4 = 0;
+int valor;
+void contadorModulos() {
+  if (valor == 1)
+    contador1++;
+  if (valor == 2)
+    contador2++;
+  if (valor == 3)
+    contador3++;
+  if (valor == 4)
+    contador4++;
+}
+//Proporção da arte 
+int nLinhas;
+int nColunas;
+//Gera matriz
+void geraMatriz() {
+  background(0);
+  for (int i=0; i<nLinhas; i++) {
+    for (int j=0; j<nColunas; j++) {
+      pushMatrix();
+      mX = j*m;
+      mY = i*m;
+      rotacao(angulo);
+      geraModulo(combo, angulo, paleta, comboTextura, mX, mY);
+      valor = tipoModulo;
+      contadorModulos();
+      popMatrix();
+      ajustaPosicao1();
+    }
+    ajustaPosicao2();
+  }
+}
+//Gera quadro.
+void geraQuadro() {
+  geraMatriz();
+  contadorModulos();
+  if (combo == 1) {
+    while (contador1 == 0 || contador2 == 0 || contador3 == 0) {
+      geraMatriz();
+    }
+  }
+  if (combo == 2) {
+    while (contador1 == 0 || contador2 == 0) {
+      geraMatriz();
+    }
+  }
+  if (combo == 3) {
+    while (contador1 == 0 || contador2 == 0 || contador3 == 0 || contador4 == 0) {
+      geraMatriz();
+    }
+  }
+}
+
+void Azul() {
+  paleta = 1;
+}
+void Dourado() {
+  paleta = 2;
+}
+void Vermelho() {
+  paleta = 3;
+}
+void Propor4() {
+  nLinhas = 4;
+}
+void Propor3() {
+  nLinhas = 3;
+}
+void Combo1() {
+  combo = 1;
+}
+void Combo2() {
+  combo = 2;
+}
+void Combo3() {
+  combo = 3;
+}
+PFont mono, mono1;
+
+void desenhos() {
+  if ((angulo == 1) && (nLinhas == 3)){
+  translate(-300,-300);
+  }
+  if ((angulo == 3) && (nLinhas == 3)){
+  translate(300,300);
+  }
+  if ((angulo == 1) && (nLinhas == 4)){
+  translate(-400,-400);
+  }
+  if ((angulo == 3) && (nLinhas == 4)){
+  translate(400,400);
+  }
+  noFill();
+  stroke(gold);
+  rect(318, 178, 104, 62);
+  rect(318, 334, 106, 22);
+  rect(310, 10, 280, 380);
+  rect(318, 278, 106, 23);
+  rect(318, 98, 104, 42);
+  rect(478, 118, 104, 62);
+  fill(gold);
+  mono = createFont("Roboto-Regular.ttf",4);
+  textFont(mono);
+  textSize(12);
+  textAlign(LEFT);
+  text("PALETA DE CORES", 318, 170);
+  text("TEXTURAS", 340, 270);
+  text("RECOMBINAR", 330, 325);
+  text("PROPORÇÃO", 335, 90);
+  text("ROTAÇÃO", 500, 230);
+  textAlign(CENTER);
+  text("COMBINAÇÃO DE\nMÓDULOS", 530, 90);
+  text(angulo*90+"º", 530, 360);
+  textSize(20);
+  textMode(SHAPE);
+  textAlign(LEFT);
+  mono = createFont("LemonMilk.otf",8);
+  textFont(mono);
+  text("Gerador de Arte Modular", 325, 35);
+  stroke(gold);
+  line(325, 40, 570, 40);
+}
+//GUI
+import controlP5.*;
+ControlP5 GUIPropor;
+ControlP5 GUIAngulo;
+ControlP5 GUITextura;
+ControlP5 GUIPaleta;
+ControlP5 GUICombo;
+ControlP5 GUIRandom;
+void setup() {
+  size(600, 400, P3D);
+  background(0);
+  noStroke();
+  textura1 = loadImage("textura1.png");
+  textura2 = loadImage("textura2.png");
+  textura3 = loadImage("textura3.png");
+  textura4 = loadImage("textura4.png");
+  textura5 = loadImage("textura5.png");
+  textura6 = loadImage("textura6.png");
+  textura7 = loadImage("textura7.png");
+  textura8 = loadImage("textura8.png");
+  textura9 = loadImage("textura9.png");
+  nLinhas = 3;
+  nColunas = 3;
+  combo = 1;
+  comboTextura = 1;
+  paleta = 1;
+  angulo = 0;
+  //GUI's
+  GUIPropor = new ControlP5(this);
+  GUIPropor.addButton("Propor3")
+    .setPosition(320, 100)
+    .setCaptionLabel("3 X 3")
+    .setSize(100, 19);
+  GUIPropor.addButton("Propor4")
+    .setPosition(320, 120)
+    .setCaptionLabel("3 X 4")
+    .setSize(100, 19);
+  GUITextura = new ControlP5(this);
+  GUITextura.addSlider("comboTextura", 1, 3, 1, 319, 279, 104, 21)
+    .setLabelVisible(true)
+    .setCaptionLabel("");
+  GUIAngulo = new ControlP5(this);
+  GUIAngulo.addKnob("angulo")
+    .setRange(0, 3)
+    .setValue(0)
+    .setLabelVisible(false)
+    .setPosition(480, 240)
+    .setRadius(50)
+    .setNumberOfTickMarks(3)
+    .setTickMarkLength(3)
+    .snapToTickMarks(true)
+    .setColorForeground(color(255))
+    .setColorBackground(color(blue))
+    .setColorActive(gold)
+    .setDragDirection(Knob.HORIZONTAL);
+  GUICombo = new ControlP5(this);
+  GUICombo.addButton("Combo3")
+    .setPosition(480, 160)
+    .setCaptionLabel("COMBO 3")
+    .setSize(100, 19);
+  GUICombo.addButton("Combo2")
+    .setPosition(480, 140)
+    .setCaptionLabel("COMBO 2")
+    .setSize(100, 19);
+  GUICombo.addButton("Combo1")
+    .setPosition(480, 120)
+    .setCaptionLabel("COMBO 1")
+    .setSize(100, 19);
+  GUIPaleta = new ControlP5(this);
+  GUIPaleta.addButton("Vermelho")
+    .setPosition(320, 220)
+    .setSize(100, 19);
+  GUIPaleta.addButton("Dourado")
+    .setPosition(320, 200)
+    .setSize(100, 19);
+  GUIPaleta.addButton("Azul")
+    .setPosition(320, 180)
+    .setSize(100, 19);
+  GUIRandom = new ControlP5(this);
+  GUIRandom.addButton("Randomizar")
+    .setLabelVisible(false)
+    .setCaptionLabel("")
+    .setPosition(319, 335)
+    .setSize(104, 21);
+}
+int a = 0;
+void Randomizar() {
+  a++;
+}
+void draw() {
+  background(0);
+  randomSeed(a);
+  noStroke();
+  geraQuadro();
+  desenhos();
+  println(combo, comboTextura, paleta, angulo);
+}
